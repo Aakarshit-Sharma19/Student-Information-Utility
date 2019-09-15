@@ -1,4 +1,4 @@
-import sys, time 
+import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QMessageBox
 import window_main as mainw
 import window_entry as entw

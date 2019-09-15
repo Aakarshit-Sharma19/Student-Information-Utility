@@ -1,3 +1,4 @@
 .directory
 /.vscode
 /__pycache__
+test.db

@@ -54,7 +54,7 @@ def push_data(info_obj):
     conn.commit()
 
 
-def get_data():
+def __get_data():
     # cur.execute("SELECT * FROM ENTRY_DATA")
     conn.commit()
     values = []
@@ -70,7 +70,7 @@ def get_data():
 
 def get_all():
     cur.execute("SELECT * FROM ENTRY_DATA")
-    return get_data()
+    return __get_data()
 
 
 def get_data_by_datename(DATE, NAME=''):
@@ -81,7 +81,7 @@ def get_data_by_datename(DATE, NAME=''):
         cur.execute("SELECT * FROM ENTRY_DATA WHERE Date=?",
                     (DATE.strftime('%d/%m/%y'),))
 
-    return get_data()
+    return __get_data()
 def show_all():
     values = get_all()
     for x in values:
