@@ -1,3 +1,5 @@
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout
 from datetime import date, datetime
 import sqlite3
 # To be Run everytime this module is used
@@ -13,8 +15,6 @@ cur.execute("""CREATE TABLE IF NOT EXISTS ENTRY_DATA
                     Interests TEXT,
                     Remarks TEXT
                 )""")
-
-
 class entry_data:
     def __init__(self, name='', address='', Phone_Number='', Date_Of_Enquiry=date.today()):
         self.Date_Of_Enquiry = Date_Of_Enquiry
@@ -67,7 +67,8 @@ def __get_data():
         values.append(obj)
     return values
 
-
+def initialize_data():
+    pass
 def get_all():
     cur.execute("SELECT * FROM ENTRY_DATA")
     return __get_data()
@@ -82,6 +83,7 @@ def get_data_by_datename(DATE, NAME=''):
                     (DATE.strftime('%d/%m/%y'),))
 
     return __get_data()
+
 def show_all():
     values = get_all()
     for x in values:

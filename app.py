@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QMessageBox
 import window_main as mainw
 import window_entry as entw
+import window_date as datew
 import window_edit_selection as editw
 import window_view_selection as vieww
 import data_mgmt as mg
@@ -15,8 +16,15 @@ class edit_selection_ui:
 
     def run(self):
         self.editui.showNormal()
-
-
+class select_date_ui:
+    def __init__(self):
+        self.dateui = QDialog()
+        self.ui = datew.Ui_Date()
+        self.ui.setupUi(self.dateui)
+    def run(self):
+        self.dateui.show()
+class select_selection_ui():
+    pass    
 class view_selection_ui():
     def __init__(self):
         self.viewui = QDialog()
@@ -31,7 +39,6 @@ class entry_ui():
         self.entryui = QDialog()
         self.ui = entw.Ui_Dialog()
         self.ui.setupUi(self.entryui)
-        self.repeat = 0
         self.ui.pushButton.clicked.connect(self.new_entry)
         self.ui.pushButton_2.clicked.connect(self.confirm_entry)
         self.ui.pushButton_3.clicked.connect(self.entryui.close)
@@ -84,7 +91,7 @@ class entry_ui():
 
 
 class main_ui:
-    def __init__(self, ent_ui_param, edit_ui_param, view_ui_param):
+    def __init__(self, ent_ui_param, edit_ui_param,  date_ui_param):#(view_ui_param)
         self.main_wind = QMainWindow()
         self.ui = mainw.Ui_MainWindow()
         self.ui.setupUi(self.main_wind)
@@ -94,14 +101,16 @@ class main_ui:
 
         self.edit_ui = edit_ui_param
 
-        self.view_ui = view_ui_param
+        # self.view_ui = view_ui_param
 
+        self.date_ui = date_ui_param
+        
         self.run()
 
     def run(self):
         self.ui.entry.clicked.connect(self.ent_ui.run)
         self.ui.close.clicked.connect(sys.exit)
-        self.ui.View_Edit.clicked.connect(self.view_ui.run)
+        self.ui.View_Edit.clicked.connect(self.date_ui.run)
         self.ui.export_excel.clicked.connect(mg.show_all)
 
 
@@ -112,5 +121,6 @@ if __name__ == '__main__':
     ent_ui = entry_ui()
     edit_ui = edit_selection_ui()
     view_ui = view_selection_ui()
-    main_ui = main_ui(ent_ui, edit_ui, view_ui)
+    date_ui = select_date_ui()
+    main_ui = main_ui(ent_ui, edit_ui, date_ui)#view_ui
     sys.exit(app.exec_())
