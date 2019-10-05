@@ -11,98 +11,127 @@ import window_entry_list as listw
 import data_mgmt as mg
 
 
-
-
-
 class edit_selection_ui:
     def __init__(self):
         self.editui = QDialog()
         self.editui.setWindowTitle("Edit the existing Entry")
         self.ui = editw.Ui_Dialog()
         self.ui.setupUi(self.editui)
+
+        self.ui.delete_entry.clicked.connect(lambda: None)
+        self.ui.save_entry.clicked.connect(self.confirm_entry)
+        self.ui.cancel.clicked.connect(self.editui.close)
+
         self.save_mbox = QMessageBox()
-        self.save_mbox.setText("The Edited Entry Has Been Saved")
+        self.save_mbox.setText("The Edited Entry Has Been Updated")
         self.save_mbox.setDetailedText("Press 'ok' or 'cancel' to continue")
         self.save_mbox.setStandardButtons(QMessageBox.Ok)
 
-    def setData(self,info_obj):
-        self.ui.StuName.setText(info_obj.name)
-        self.ui.StuAddress.setText(info_obj.address)
-        self.ui.Stu_Phone.setText(info_obj.Phone_Number)
-        self.ui.Interest.setText(info_obj.Area_of_Interest)
-        self.ui.Stu_date.setDate(info_obj.Stu_date)
-        self.ui.Remarks.setText(info_obj.Remarks)
-
+    def setData(self, info):
+        self.info = info
+        self.index = info.getIndex()
+        print(self.index)
+        self.ui.StuName.setText(self.info.name)
+        self.ui.StuAddress.setText(self.info.address)
+        self.ui.StuPhone.setText(self.info.Phone_Number)
+        self.ui.Stu_Interest.setText(self.info.Area_of_Interest)
+        self.ui.StuDate.setDate(self.info.Date_Of_Enquiry)
+        self.ui.Remarks.setPlainText(self.info.Remarks)
 
     def run(self):
-        self.editui.showNormal()
+        self.editui.exec_()
 
     def confirm_entry(self):
-        self.store_entry_db()
+        self.update()
         self.editui.close()
 
-    def store_entry_db(self):
+    def update(self):
 
-        # info = mg.entry_data()
-        # info.name = self.ui.StuName.text()
-        # info.address = self.ui.StuAddress.text()
-        # info.Phone_Number = self.ui.Stu_Phone.text()
-        # info.Area_of_Interest = self.ui.Interest.text()
-        # info.Date_Of_Enquiry = self.ui.Stu_date.date().toPyDate()  # .currentDate().toPyDate()
-        # info.Remarks = self.ui.Remarks.toPlainText()
+        self.info = mg.entry_data()
+        self.info.name = self.ui.StuName.text()
+        self.info.address = self.ui.StuAddress.text()
+        self.info.Phone_Number = self.ui.StuPhone.text()
+        self.info.Area_of_Interest = self.ui.Stu_Interest.text()
+        self.info.Date_Of_Enquiry = self.ui.StuDate.date(
+        ).toPyDate()  # .currentDate().toPyDate()
+        self.info.Remarks = self.ui.Remarks.toPlainText()
+        self.info.setIndex(self.index)
 
-        # mg.details(info)
-        # mg.push_data(info)
+        mg.details(self.info)
+        mg.update_data(self.info, self.info.getIndex())
         # print(self.ui.Stu_date.date().currentDate().toString())
         self.save_dialog()
-    
+
     def save_dialog(self):
         self.save_mbox.exec_()
 
 
-
 class select_date_name_ui:
-    def __init__(self, view_ui_param):
+    def __init__(self, view_ui_param, edit_ui_param):
         self.view_ui = view_ui_param
+        self.edit_ui = edit_ui_param
 
         self.datenameui = QDialog()
         self.ui = datew.Ui_Date()
         self.ui.setupUi(self.datenameui)
-        self.datenameui.setWindowTitle("Search Existing Entries by Name or Date")
-        
+        self.datenameui.setWindowTitle(
+            "Search Existing Entries by Name or Date")
+
         self.EntryName = ''
 
         self.ui.edit_bydate.clicked.connect(self.EditByDate)
         self.ui.edit_byname.clicked.connect(self.EditByName)
-        
+
         self.ui.view_bydate.clicked.connect(self.ViewByDate)
         self.ui.view_byname.clicked.connect(self.ViewByName)
-    
+
     def run(self):
         self.datenameui.exec_()
+
     def create_entry_list(self, self_entry_data):
-            self.entry_list_ui = listw.Ui_Window(self_entry_data)
+        self.entry_list_ui = listw.Ui_Window(self_entry_data)
+
     def EditByDate(self):
-        pass
+        self.data = mg.get_data_by_datename(
+            self.ui.query_date.date().toPyDate())
+        self.EditList()
+
     def EditByName(self):
-        self.data =mg.get_data_by_name(self.ui.query_name.text())
-        self.create_entry_list(self.data)
-        self.entry_list_ui.run()
-        self.EntryName = self.entry_list_ui.getName()
-        print(self.EntryName)
+        self.data = mg.get_data_by_name(self.ui.query_name.text())
+        self.EditList()
+
     def ViewByDate(self):
-        pass
+        self.data = mg.get_data_by_datename(
+            self.ui.query_date.date().toPyDate())
+        self.ViewList()
+
     def ViewByName(self):
-        self.data =mg.get_data_by_name(self.ui.query_name.text())
-        self.create_entry_list(self.data)
-        self.entry_list_ui.run()
-        self.Entry = self.entry_list_ui.getData()
-        print(self.Entry.getName())
-        self.View()
+        self.data = mg.get_data_by_name(self.ui.query_name.text())
+        self.ViewList()
+
+    def EditList(self):
+        if self.data != []:
+            print(self.data)
+            self.create_entry_list(self.data)
+            self.entry_list_ui.run()
+            self.Entry = self.entry_list_ui.getData()
+            self.edit_ui.setData(self.Entry)
+            self.Edit()
+
+    def Edit(self):
+        self.edit_ui.run()
+
+    def ViewList(self):
+        if self.data != []:
+            print(self.data)
+            self.create_entry_list(self.data)
+            self.entry_list_ui.run()
+            self.Entry = self.entry_list_ui.getData()
+            self.View()
 
     def View(self):
-       
-        self.view_ui.populate(self.Entry)
+        self.ui.retranslateUi(self.datenameui)
+        self.view_ui.setData(self.Entry)
         self.view_ui.run()
 
 
@@ -112,16 +141,20 @@ class view_selection_ui():
         self.ui = vieww.Ui_Dialog()
         self.ui.setupUi(self.viewui)
         self.ui.OK_Button.clicked.connect(self.viewui.close)
-    def populate(self, Entry):
+
+    def setData(self, Entry):
+        print('Index', Entry.getIndex())
         self.ui.StuName.setText(Entry.name)
         self.ui.StuAddress.setText(Entry.address)
         self.ui.Interest.setText(Entry.Area_of_Interest)
         self.ui.StuPhone.setText(Entry.Phone_Number)
         self.ui.StuDate.setText(Entry.Date_Of_Enquiry.strftime('%d/%m/%y'))
         self.ui.Remarks.setPlainText(Entry.Remarks)
+
     def run(self):
-        print('viewed')
+        print('Viewed', self.ui.StuName.text())
         self.viewui.exec_()
+
 
 class select_selection_ui():
     pass
@@ -159,12 +192,12 @@ class entry_ui():
         info.address = self.ui.StuAddress.text()
         info.Phone_Number = self.ui.StuPhone.text()
         info.Area_of_Interest = self.ui.Interest.text()
-        info.Date_Of_Enquiry = self.ui.StuDate.date().toPyDate()  # .currentDate().toPyDate()
+        info.Date_Of_Enquiry = self.ui.StuDate.date(
+        ).toPyDate()  # .currentDate().toPyDate()
         info.Remarks = self.ui.Remarks.toPlainText()
 
         mg.details(info)
         mg.push_data(info)
-        # print(self.ui.Stu_date.date().currentDate().toString())
         self.save_dialog()
 
     def new_entry(self):
@@ -172,7 +205,6 @@ class entry_ui():
         print("Last Entry Saved")
         self.ui.retranslateUi(self.entryui)
         self.ui.StuDate.setDate(self.ui.StuDate.date().currentDate())
-        
 
     def save_dialog(self):
 
@@ -180,7 +212,7 @@ class entry_ui():
 
 
 class main_ui:
-    def __init__(self, ent_ui_param, edit_ui_param,  date_ui_param, ):#(view_ui_param)
+    def __init__(self, ent_ui_param, edit_ui_param,  date_ui_param, ):  # (view_ui_param)
         self.main_wind = QMainWindow()
         self.ui = mainw.Ui_MainWindow()
         self.ui.setupUi(self.main_wind)
@@ -195,7 +227,7 @@ class main_ui:
         # self.view_ui = view_ui_param
 
         self.date_ui = date_ui_param
-        
+
         self.run()
 
     def run(self):
@@ -212,6 +244,6 @@ if __name__ == '__main__':
     ent_ui = entry_ui()
     edit_ui = edit_selection_ui()
     view_ui = view_selection_ui()
-    date_ui = select_date_name_ui(view_ui)
-    main_ui = main_ui(ent_ui, edit_ui, date_ui)#view_ui
+    date_ui = select_date_name_ui(view_ui, edit_ui)
+    main_ui = main_ui(ent_ui, edit_ui, date_ui)  # view_ui
     sys.exit(app.exec_())

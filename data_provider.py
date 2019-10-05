@@ -1,2 +1,2 @@
 class DataForEditUi:
-    
+    pass

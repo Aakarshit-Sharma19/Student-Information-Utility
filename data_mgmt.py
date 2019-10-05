@@ -64,12 +64,30 @@ def push_data(info_obj):
                                                                info_obj.name, info_obj.address, info_obj.Phone_Number, info_obj.Area_of_Interest, info_obj.Remarks))
     conn.commit()
 
-# Date TEXT,
-                    # Name TEXT,
-                    # Address TEXT,
-                    # Phone TEXT,
-                    # Interests TEXT,
-                    # Remarks TEXT
+
+
+def update_data(info_obj, index_param):
+    cur.execute("SELECT * FROM ENTRY_DATA WHERE ID = ?",(index_param,))
+    INDEX, date_temp, name, address, Phone_Number, Area_of_Interest, Remarks = cur.fetchone()
+    date_obj = info_obj.Date_Of_Enquiry.strftime('%d/%m/%y')
+    if date_obj != date_temp:
+        update('Date',date_obj,index_param )
+    if info_obj.name != name:
+        update('Name',info_obj.name,index_param)
+    if info_obj.address != address:
+        update('Address',info_obj.address,index_param)
+    if info_obj.Phone_Number!= Phone_Number:
+        update('Phone',info_obj.Phone_Number,index_param)
+    if info_obj.Area_of_Interest != Area_of_Interest:
+        update('Interests',info_obj.Area_of_Interest,index_param)
+    if info_obj.Remarks != Remarks:
+        update('Remarks',info_obj.Area_of_Interest,index_param)
+
+def update(var, val, index):
+    cur.execute('UPDATE ENTRY_DATA SET '+ var + '= ? WHERE ID =?',(val,index))
+    conn.commit()
+
+
 
 def __get_data():
     # cur.execute("SELECT * FROM ENTRY_DATA")
@@ -85,12 +103,9 @@ def __get_data():
         values.append(obj)
     return values
 
-def initialize_data():
-    pass
 def get_all():
     cur.execute("SELECT * FROM ENTRY_DATA")
     return __get_data()
-
 
 def get_data_by_datename(DATE, NAME=''):
     if NAME != '':
@@ -105,6 +120,8 @@ def get_data_by_datename(DATE, NAME=''):
 def get_data_by_name(NAME):
     cur.execute("SELECT * FROM ENTRY_DATA WHERE Name LIKE ?",('%'+NAME+'%',))
     return __get_data()
+
+
 
 def show_all():
     values = get_all()
