@@ -7,7 +7,7 @@ conn = sqlite3.connect('test.db')
 cur = conn.cursor()
 
 cur.execute("""CREATE TABLE IF NOT EXISTS ENTRY_DATA
-                (
+                (   ID INTEGER PRIMARY KEY AUTOINCREMENT,
                     Date TEXT,
                     Name TEXT,
                     Address TEXT,
@@ -17,6 +17,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS ENTRY_DATA
                 )""")
 class entry_data:
     def __init__(self, name='', address='', Phone_Number='', Date_Of_Enquiry=date.today()):
+        self.index = 0
         self.Date_Of_Enquiry = Date_Of_Enquiry
         self.name = name
         self.address = address
@@ -36,34 +37,51 @@ class entry_data:
         self.Area_of_Interest = Area_of_Interest
         self.Remarks = Remarks
 
+    def setIndex(self, id):
+        self.index = id 
+    
+    def getName(self):
+        return self.name
+    def getIndex(self):
+        return self.index 
 
-def details(info1):
+def details(info_obj):
+    print("*********************************")
     print("The details are as info")
-    print("Name:", info1.name)
-    print("Address:", info1.address)
-    print("List of Phone Numbers:", info1.Phone_Number)
-    print("Area of interest:", info1.Area_of_Interest)
-    date_ = date.strftime(info1.Date_Of_Enquiry, "%d/%m/%Y")
+    print('ID',info_obj.getIndex())
+    print("Name:", info_obj.name)
+    print("Address:", info_obj.address)
+    print("List of Phone Numbers:", info_obj.Phone_Number)
+    print("Area of interest:", info_obj.Area_of_Interest)
+    date_ = date.strftime(info_obj.Date_Of_Enquiry, "%d/%m/%Y")
     print("Date:", date_)
-    print("Remarks:", info1.Remarks)
+    print("Remarks:", info_obj.Remarks)
+    print("*********************************")
 
 
 def push_data(info_obj):
-    cur.execute("INSERT INTO ENTRY_DATA VALUES(?,?,?,?,?,?)", (info_obj.Date_Of_Enquiry.strftime('%d/%m/%y'),
+    cur.execute("INSERT INTO ENTRY_DATA(Date, Name, Address, Phone, Interests, Remarks) VALUES(?,?,?,?,?,?)", (info_obj.Date_Of_Enquiry.strftime('%d/%m/%y'),
                                                                info_obj.name, info_obj.address, info_obj.Phone_Number, info_obj.Area_of_Interest, info_obj.Remarks))
     conn.commit()
 
+# Date TEXT,
+                    # Name TEXT,
+                    # Address TEXT,
+                    # Phone TEXT,
+                    # Interests TEXT,
+                    # Remarks TEXT
 
 def __get_data():
     # cur.execute("SELECT * FROM ENTRY_DATA")
     conn.commit()
     values = []
     for immediate_data in cur.fetchall():
-        date_temp, name, address, Phone_Number, Area_of_Interest, Remarks = immediate_data
+        INDEX, date_temp, name, address, Phone_Number, Area_of_Interest, Remarks = immediate_data
 
         obj = entry_data(name, address, Phone_Number,
                          datetime.strptime(date_temp, '%d/%m/%y').date())
         obj.push_rem(Area_of_Interest, Remarks)
+        obj.setIndex(INDEX)
         values.append(obj)
     return values
 
@@ -84,7 +102,13 @@ def get_data_by_datename(DATE, NAME=''):
 
     return __get_data()
 
+def get_data_by_name(NAME):
+    cur.execute("SELECT * FROM ENTRY_DATA WHERE Name LIKE ?",('%'+NAME+'%',))
+    return __get_data()
+
 def show_all():
     values = get_all()
     for x in values:
         details(x)
+if __name__ == "__main__":
+    show_all()
