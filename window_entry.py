@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(926, 610)
+        Dialog.resize(926, 633)
         self.gridLayout_2 = QtWidgets.QGridLayout(Dialog)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.gridLayout = QtWidgets.QGridLayout()
@@ -57,16 +57,16 @@ class Ui_Dialog(object):
         self.Save_Status = QtWidgets.QLabel(Dialog)
         self.Save_Status.setText("")
         self.Save_Status.setObjectName("Save_Status")
-        self.gridLayout.addWidget(self.Save_Status, 6, 0, 1, 1)
-        self.Save_New_Button = QtWidgets.QPushButton(Dialog)
-        self.Save_New_Button.setObjectName("Save_New_Button")
-        self.gridLayout.addWidget(self.Save_New_Button, 6, 1, 1, 1)
+        self.gridLayout.addWidget(self.Save_Status, 8, 0, 1, 1)
         self.Save_Exit_Button = QtWidgets.QPushButton(Dialog)
         self.Save_Exit_Button.setObjectName("Save_Exit_Button")
-        self.gridLayout.addWidget(self.Save_Exit_Button, 6, 2, 1, 1)
+        self.gridLayout.addWidget(self.Save_Exit_Button, 8, 2, 1, 1)
         self.Cancel_Button = QtWidgets.QPushButton(Dialog)
         self.Cancel_Button.setObjectName("Cancel_Button")
-        self.gridLayout.addWidget(self.Cancel_Button, 6, 3, 1, 1)
+        self.gridLayout.addWidget(self.Cancel_Button, 8, 3, 1, 1)
+        self.Save_New_Button = QtWidgets.QPushButton(Dialog)
+        self.Save_New_Button.setObjectName("Save_New_Button")
+        self.gridLayout.addWidget(self.Save_New_Button, 8, 1, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
@@ -74,7 +74,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "New Entry"))
         self.Group_StuName.setTitle(_translate("Dialog", "Name"))
         self.StuName.setText(_translate("Dialog", "Type the Student\'s Name Here"))
         self.Group_StuAddress.setTitle(_translate("Dialog", "Address"))
@@ -86,6 +86,6 @@ class Ui_Dialog(object):
         self.Group_StuDate.setTitle(_translate("Dialog", "Date"))
         self.Group_Remarks.setTitle(_translate("Dialog", "Remarks"))
         self.Remarks.setPlainText(_translate("Dialog", "Remarks or extra information pertaining to the student."))
-        self.Save_New_Button.setText(_translate("Dialog", "Save and New Entry"))
         self.Save_Exit_Button.setText(_translate("Dialog", "Save and Exit"))
         self.Cancel_Button.setText(_translate("Dialog", "Cancel"))
+        self.Save_New_Button.setText(_translate("Dialog", "Save and New Entry"))

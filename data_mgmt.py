@@ -2,8 +2,11 @@ from PyQt5 import QtGui
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout
 from datetime import date, datetime
 import sqlite3
+import os
 # To be Run everytime this module is used
-conn = sqlite3.connect('test.db')
+file = '.entries.db'
+file = os.path.expanduser('~/'+file)
+conn = sqlite3.connect(file)
 cur = conn.cursor()
 
 cur.execute("""CREATE TABLE IF NOT EXISTS ENTRY_DATA
@@ -84,10 +87,12 @@ def update_data(info_obj, index_param):
         update('Remarks',info_obj.Area_of_Interest,index_param)
 
 def update(var, val, index):
-    cur.execute('UPDATE ENTRY_DATA SET '+ var + '= ? WHERE ID =?',(val,index))
+    cur.execute('UPDATE ENTRY_DATA SET '+ var + '= ? WHERE ID = ?',(val,index))
     conn.commit()
 
-
+def delete(index):
+    cur.execute("DELETE FROM ENTRY_DATA WHERE ID = ?",(index,))
+    conn.commit()
 
 def __get_data():
     # cur.execute("SELECT * FROM ENTRY_DATA")

@@ -22,7 +22,7 @@ class Ui_Window(QDialog):
         super().__init__()
         self.finalEntry = mg.entry_data()
         self.index = -1 
-        self.title = "PyQt5 Scroll Bar"
+        self.title = "Select from One of the Entries"
         self.top = 200
         self.left = 500
         self.width = 400
