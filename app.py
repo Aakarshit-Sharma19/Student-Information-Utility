@@ -8,8 +8,8 @@ import window_date_name as datew
 import window_edit_selection as editw
 import window_view_selection as vieww
 import window_entry_list as listw
-import data_mgmt as mg
-import xlsxwriter
+import data_mgmt as mg 
+import xlsxwriter 
 
 
 
@@ -127,6 +127,7 @@ class edit_selection_ui:
 
     def run(self):
         self.editui.exec_()
+        
 
     def confirm_entry(self):
         self.update()
@@ -198,6 +199,7 @@ class entry_ui():
         self.save_mbox.setStandardButtons(QMessageBox.Ok)
 
     def run(self):
+        self.ui.retranslateUi(self.entryui)
         self.entryui.showMaximized()
 
     def confirm_entry(self):
@@ -321,3 +323,4 @@ if __name__ == '__main__':
     date_ui = select_date_name_ui(view_ui, edit_ui)
     main_ui = main_ui(ent_ui, edit_ui, date_ui)  # view_ui
     sys.exit(app.exec_())
+    
