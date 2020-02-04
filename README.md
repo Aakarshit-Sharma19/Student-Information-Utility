@@ -6,8 +6,8 @@ Student Information Utility aims to provide a convenient way to keep a record of
 3.  Ability to export the records as an excel files for easier readibility and manipulation.
 
 ## Possible features in future versions
-1.  UI overhaul to modern design standards for improved user interface and user experience for users of non technical background.
-2.  Add synchronization support for multiple devices thus shifting focus of the proram to SaaS.
+1.  UI overhaul to modern design standards for improved user interface and user experience for users of non-technical background.
+2.  Add synchronization support for multiple devices thus shifting focus of the application to SaaS.
 3.  Extend the accessibility by having web app and apps for portable devices.  
 4.  Possible chances of commercialization and generation of employment.
 
