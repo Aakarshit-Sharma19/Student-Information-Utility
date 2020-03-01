@@ -10,6 +10,7 @@ class Button(QPushButton):
         self.obj = obj
         self.name = self.obj.getName()
         super().__init__(self.name)
+        self.setMinimumSize(300,50)
         self.widgetobj = widgetobj
         self.index = self.obj.getIndex()
     def click(self):
@@ -17,7 +18,7 @@ class Button(QPushButton):
         self.widgetobj.close()
 
 
-class Ui_Window(QDialog):
+class UiWindow(QDialog):
     def __init__(self, self_entry_data):
         super().__init__()
         self.finalEntry = mg.entry_data()
@@ -56,7 +57,7 @@ class Ui_Window(QDialog):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = Ui_Window(50)
+    window = UiWindow(50)
     sys.exit(app.exec_())
 
 # To get the resolution of the available screen where app is the instance of the QApplication

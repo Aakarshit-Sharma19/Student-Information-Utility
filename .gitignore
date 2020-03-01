@@ -1,8 +1,10 @@
 .directory
 /.vscode
+/idea
 /__pycache__
 test.db
 test.py
 /dist
 /build
 app.spec
+.idea

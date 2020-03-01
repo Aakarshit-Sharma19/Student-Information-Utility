@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -13,32 +13,30 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(392, 157)
+        MainWindow.resize(836, 425)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.gridLayout = QtWidgets.QGridLayout()
-        self.gridLayout.setObjectName("gridLayout")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 1, 0, 1, 2)
+        self.gridLayout_2.addWidget(self.label, 0, 0, 1, 4)
         self.entry = QtWidgets.QPushButton(self.centralwidget)
+        self.entry.setMinimumSize(QtCore.QSize(200, 50))
         self.entry.setObjectName("entry")
-        self.gridLayout.addWidget(self.entry, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.entry, 1, 0, 1, 1)
         self.View_Edit = QtWidgets.QPushButton(self.centralwidget)
+        self.View_Edit.setMinimumSize(QtCore.QSize(200, 50))
         self.View_Edit.setObjectName("View_Edit")
-        self.gridLayout.addWidget(self.View_Edit, 2, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.View_Edit, 1, 1, 1, 1)
         self.export_excel = QtWidgets.QPushButton(self.centralwidget)
+        self.export_excel.setMinimumSize(QtCore.QSize(200, 50))
         self.export_excel.setObjectName("export_excel")
-        self.gridLayout.addWidget(self.export_excel, 3, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.export_excel, 1, 2, 1, 1)
         self.close = QtWidgets.QPushButton(self.centralwidget)
+        self.close.setMinimumSize(QtCore.QSize(200, 50))
         self.close.setObjectName("close")
-        self.gridLayout.addWidget(self.close, 3, 1, 1, 1)
-        self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.close, 1, 3, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -50,9 +48,8 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "Student Information Utility"))
-        self.label_2.setText(_translate("MainWindow", "Do you want to do a new entry or follow up to existing entry?"))
+        self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt;\">Amazon Institute Enquiry Utility</span></p><p align=\"center\"><br/>Welcome to the Enquiry Utility.</p><p align=\"center\">You can create a new entry, view or edit the existing entries and also export them as excel files.</p><p align=\"center\"><br/></p></body></html>"))
         self.entry.setText(_translate("MainWindow", "New Entry"))
-        self.View_Edit.setText(_translate("MainWindow", "View or Edit an Existing Entry"))
+        self.View_Edit.setText(_translate("MainWindow", "View or Edit existing entries"))
         self.export_excel.setText(_translate("MainWindow", "Export To Excel"))
         self.close.setText(_translate("MainWindow", "Close"))
