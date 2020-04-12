@@ -207,7 +207,7 @@ class EntryUi(QDialog):
         self.ui.Save_Exit_Button.clicked.connect(self.confirm_entry)
         self.ui.Cancel_Button.clicked.connect(self.close)
 
-        self.ui.Save_Status.setText(f"Today's Date: {self.ui.StuDate.date().currentDate().toString()}")
+        self.ui.Save_Status.setText("Today's Date: {}".format(self.ui.StuDate.date().currentDate().toString()))
         self.ui.StuDate.setDate(self.ui.StuDate.date().currentDate())
 
         self.save_mbox = QMessageBox()
