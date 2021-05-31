@@ -48,8 +48,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt;\">Amazon Institute Enquiry Utility</span></p><p align=\"center\"><br/>Welcome to the Enquiry Utility.</p><p align=\"center\">You can create a new entry, view or edit the existing entries and also export them as excel files.</p><p align=\"center\"><br/></p></body></html>"))
+        self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt;\">Student Information Utility</span></p><p align=\"center\"><br/>Welcome to the Enquiry Utility.</p><p align=\"center\">You can create a new entry, view or edit the existing entries and also export them as excel files.</p><p align=\"center\"><br/></p></body></html>"))
         self.entry.setText(_translate("MainWindow", "New Entry"))
-        self.View_Edit.setText(_translate("MainWindow", "View or Edit existing entries"))
+        self.View_Edit.setText(_translate(
+            "MainWindow", "View or Edit existing entries"))
         self.export_excel.setText(_translate("MainWindow", "Export To Excel"))
         self.close.setText(_translate("MainWindow", "Close"))

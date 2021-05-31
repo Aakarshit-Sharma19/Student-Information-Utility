@@ -18,6 +18,8 @@ cur.execute("""CREATE TABLE IF NOT EXISTS ENTRY_DATA
                     Interests TEXT,
                     Remarks TEXT
                 )""")
+
+
 class entry_data:
     def __init__(self, name='', address='', Phone_Number='', Date_Of_Enquiry=date.today()):
         self.index = 0
@@ -41,17 +43,19 @@ class entry_data:
         self.Remarks = Remarks
 
     def setIndex(self, id):
-        self.index = id 
-    
+        self.index = id
+
     def getName(self):
         return self.name
+
     def getIndex(self):
-        return self.index 
+        return self.index
+
 
 def details(info_obj):
     print("*********************************")
     print("The details are as info")
-    print('ID',info_obj.getIndex())
+    print('ID', info_obj.getIndex())
     print("Name:", info_obj.name)
     print("Address:", info_obj.address)
     print("List of Phone Numbers:", info_obj.Phone_Number)
@@ -64,35 +68,38 @@ def details(info_obj):
 
 def push_data(info_obj):
     cur.execute("INSERT INTO ENTRY_DATA(Date, Name, Address, Phone, Interests, Remarks) VALUES(?,?,?,?,?,?)", (info_obj.Date_Of_Enquiry.strftime('%d/%m/%y'),
-                                                               info_obj.name, info_obj.address, info_obj.Phone_Number, info_obj.Area_of_Interest, info_obj.Remarks))
+                                                                                                               info_obj.name, info_obj.address, info_obj.Phone_Number, info_obj.Area_of_Interest, info_obj.Remarks))
     conn.commit()
-
 
 
 def update_data(info_obj, index_param):
-    cur.execute("SELECT * FROM ENTRY_DATA WHERE ID = ?",(index_param,))
+    cur.execute("SELECT * FROM ENTRY_DATA WHERE ID = ?", (index_param,))
     INDEX, date_temp, name, address, Phone_Number, Area_of_Interest, Remarks = cur.fetchone()
     date_obj = info_obj.Date_Of_Enquiry.strftime('%d/%m/%y')
     if date_obj != date_temp:
-        update('Date',date_obj,index_param )
+        update('Date', date_obj, index_param)
     if info_obj.name != name:
-        update('Name',info_obj.name,index_param)
+        update('Name', info_obj.name, index_param)
     if info_obj.address != address:
-        update('Address',info_obj.address,index_param)
-    if info_obj.Phone_Number!= Phone_Number:
-        update('Phone',info_obj.Phone_Number,index_param)
+        update('Address', info_obj.address, index_param)
+    if info_obj.Phone_Number != Phone_Number:
+        update('Phone', info_obj.Phone_Number, index_param)
     if info_obj.Area_of_Interest != Area_of_Interest:
-        update('Interests',info_obj.Area_of_Interest,index_param)
+        update('Interests', info_obj.Area_of_Interest, index_param)
     if info_obj.Remarks != Remarks:
-        update('Remarks',info_obj.Area_of_Interest,index_param)
+        update('Remarks', info_obj.Area_of_Interest, index_param)
+
 
 def update(var, val, index):
-    cur.execute('UPDATE ENTRY_DATA SET '+ var + '= ? WHERE ID = ?',(val,index))
+    cur.execute('UPDATE ENTRY_DATA SET ' + var +
+                '= ? WHERE ID = ?', (val, index))
     conn.commit()
 
+
 def delete(index):
-    cur.execute("DELETE FROM ENTRY_DATA WHERE ID = ?",(index,))
+    cur.execute("DELETE FROM ENTRY_DATA WHERE ID = ?", (index,))
     conn.commit()
+
 
 def __get_data():
     # cur.execute("SELECT * FROM ENTRY_DATA")
@@ -108,9 +115,11 @@ def __get_data():
         values.append(obj)
     return values
 
+
 def get_all():
     cur.execute("SELECT * FROM ENTRY_DATA")
     return __get_data()
+
 
 def get_data_by_datename(DATE, NAME=''):
     if NAME != '':
@@ -122,15 +131,17 @@ def get_data_by_datename(DATE, NAME=''):
 
     return __get_data()
 
-def get_data_by_name(NAME):
-    cur.execute("SELECT * FROM ENTRY_DATA WHERE Name LIKE ?",('%'+NAME+'%',))
-    return __get_data()
 
+def get_data_by_name(NAME):
+    cur.execute("SELECT * FROM ENTRY_DATA WHERE Name LIKE ?", ('%'+NAME+'%',))
+    return __get_data()
 
 
 def show_all():
     values = get_all()
     for x in values:
         details(x)
+
+
 if __name__ == "__main__":
     show_all()
